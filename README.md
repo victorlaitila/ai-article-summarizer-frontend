@@ -1,43 +1,41 @@
-# AI Article Summarizer - Frontend
+# AI Article Summarizer Frontend
 
-This is the **React + TailwindCSS** frontend for the AI Article Summarizer project.
+This is the React + Vite frontend for the AI Article Summarizer project.
+It provides a user interface to scrape and summarize articles using the backend API.
 
-It allows users to input a URL and displays a summarized version of the article using the backend API.
-
----
+## Live Demo
+The app is live here: [AI Article Summarizer Frontend](https://victorlaitila.github.io/ai-article-summarizer-frontend/)
 
 ## Features
-
-- Submit article URLs for summarization
-- Toggle between full article and summary view
-- Multiple summary modes (default, bullet points and simplified)
-
----
+- Enter a URL and get the article text plus a summarized version
+- Choose between different summarization modes:
+  - Default (balanced summary)
+  - Bullet points
+  - Simplified (short and simple summary)
 
 ## Tech Stack
-
-- React 18
-- TypeScript
+- React
 - TailwindCSS
-- Lottie (for animations)
-- Fetch API to communicate with the backend
+- Axios for API calls
+- GitHub Pages for deployment
 
----
+## Installation
 
-## Setup / Local Development
+Clone the repository:
 
-1. **Clone the repository:**
-  ```bash
-  git clone https://github.com/victorlaitila/ai-article-summarizer-frontend.git
-  cd ai-article-summarizer-frontend
-  ```
+```bash
+git clone https://github.com/victorlaitila/ai-article-summarizer-frontend.git
+cd ai-article-summarizer-frontend
+```
 
-2. **Install dependencies:**
-  ```bash
-  npm install
-  ```
+Install dependencies:
 
-3. **Start the development server:**
-  ```bash
-  npm run dev
-  ```
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
