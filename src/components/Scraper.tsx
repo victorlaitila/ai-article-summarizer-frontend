@@ -5,6 +5,8 @@ import Article from "./Article";
 import ErrorMessage from "./ErrorMessage";
 import InputForm from "./InputForm";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface APIResponse {
   article_text?: string;
   summary?: string;
@@ -33,7 +35,7 @@ export default function ScraperForm() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/scrape-and-summarize", {
+      const response = await fetch(`${API_URL}/scrape-and-summarize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url, mode }),
