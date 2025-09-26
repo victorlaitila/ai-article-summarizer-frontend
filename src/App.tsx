@@ -8,8 +8,8 @@ function App() {
   useEffect(() => {
     const wakeBackend = async () => {
       try {
-        await fetch(`${import.meta.env.VITE_API_URL}/health`);
-        console.log("Backend wake-up call sent");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/health`);
+        console.log("Backend wake-up: ", response.status);
       } catch (err) {
         console.error("Backend wake-up failed", err);
       }

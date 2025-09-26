@@ -18,7 +18,7 @@ export default function InputForm({
   loading,
 }: InputFormProps) {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form id="url-form" onSubmit={handleSubmit} className="space-y-6">
       {/* URL input with label */}
       <div>
         <label
