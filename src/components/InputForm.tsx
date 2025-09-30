@@ -1,4 +1,6 @@
 import type { FormEvent } from "react";
+import SubmitButton from "./SubmitButton";
+import ModeSelect from "./ModeSelect";
 
 interface InputFormProps {
   url: string;
@@ -21,12 +23,9 @@ export default function InputForm({
     <form id="url-form" onSubmit={handleSubmit} className="space-y-6">
       {/* URL input with label */}
       <div>
-        <label
-          htmlFor="url"
-          className="block text-sm font-semibold text-gray-700 mb-2"
-        >
+        <p className="block text-sm font-semibold text-gray-700 mb-2">
           Paste an article URL to summarize:
-        </label>
+        </p>
         <input
           id="url"
           type="url"
@@ -40,14 +39,14 @@ export default function InputForm({
         />
       </div>
 
-      {/* Summary mode select with label */}
+      <ModeSelect mode={mode} setMode={setMode} />
+
+
+      {/* Summary mode select with label 
       <div>
-        <label
-          htmlFor="mode"
-          className="block text-sm font-semibold text-gray-700 mb-2"
-        >
+        <p className="block text-sm font-semibold text-gray-700 mb-2">
           Choose how you want the article summarized:
-        </label>
+        </p>
         <select
           value={mode}
           onChange={(e) => setMode(e.target.value)}
@@ -59,38 +58,10 @@ export default function InputForm({
           <option value="bullets">Bullet Points</option>
           <option value="simple">Simplified</option>
         </select>
-      </div>
+      </div>*/}
 
       {/* Submit button */}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50 shadow-md flex items-center justify-center gap-2 cursor-pointer"
-      >
-        {loading && (
-          <svg
-            className="animate-spin h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-            ></path>
-          </svg>
-        )}
-        {loading ? "Summarizing..." : "Summarize Article"}
-      </button>
+      <SubmitButton loading={loading} />
     </form>
   );
 }
