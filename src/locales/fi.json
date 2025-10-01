@@ -1,0 +1,20 @@
+{
+  "appName": "SummaryAI",
+  "description": "Syötä artikkelin URL-osoite ja valitse, miten haluat sen tiivistettävän:",
+  "articleUrl": "Artikkelin URL-osoite",
+  "urlPlaceholder": "https://example.com/article",
+  "summaryMode": "Yhteenvetotila",
+  "chooseSummaryStyle": "Valitse yhteenvedon tyyli",
+  "simplifiedSummary": "Yksinkertaistettu",
+  "defaultSummary": "Normaali",
+  "bulletPointsSummary": "Luettelomerkit",
+  "generateSummary": "Luo Yhteenveto",
+  "generating": "Luodaan...",
+  "generatedSummary": "Luotu yhteenveto",
+  "readyToSummarize": "Valmis yhteenvedon luomiseen",
+  "readyDescription": "Syötä artikkelin URL-osoite ylhäälle ja valitse haluamasi yhteenvedon tyyli aloittaaksesi.",
+  "errorMessage": "Syötä URL-osoite ja valitse yhteenvedon tyyli",
+  "successMessage": "Yhteenveto luotu onnistuneesti!",
+  "copiedMessage": "Yhteenveto kopioitu leikepöydälle!",
+  "downloadedMessage": "Yhteenveto ladattu!"
+}

@@ -1,0 +1,20 @@
+{
+  "appName": "SummaryAI",
+  "description": "Ange en artikel-URL och välj hur du vill att den ska sammanfattas:",
+  "articleUrl": "Artikel-URL",
+  "urlPlaceholder": "https://example.com/article",
+  "summaryMode": "Sammanfattningsläge",
+  "chooseSummaryStyle": "Välj sammanfattningsstil",
+  "simplifiedSummary": "Förenklad",
+  "defaultSummary": "Standard",
+  "bulletPointsSummary": "Punktlista",
+  "generateSummary": "Generera Sammanfattning",
+  "generating": "Genererar...",
+  "generatedSummary": "Genererad sammanfattning",
+  "readyToSummarize": "Redo att sammanfatta",
+  "readyDescription": "Ange en artikel-URL ovan och välj önskad sammanfattningsstil för att komma igång.",
+  "errorMessage": "Ange en URL och välj ett sammanfattningsläge",
+  "successMessage": "Sammanfattningen har genererats!",
+  "copiedMessage": "Sammanfattningen har kopierats till urklipp!",
+  "downloadedMessage": "Sammanfattningen har laddats ner!"
+}

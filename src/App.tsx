@@ -8,6 +8,7 @@ import { Copy, Download, Share2, Sparkles } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
+import Gradient from './components/Gradient';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -107,7 +108,7 @@ export default function App() {
   };
 
   const handleShare = () => {
-    {/*if (navigator.share) {
+    if (navigator.share) {
       navigator.share({
         title: 'Article Summary',
         text: summary,
@@ -115,8 +116,7 @@ export default function App() {
     } else {
       // Fallback for browsers that don't support Web Share API
       handleCopy();
-    }*/}
-    console.log("share function called.")
+    }
   };
 
   return (
@@ -136,6 +136,7 @@ export default function App() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
+              <Gradient />
               <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">{t("appName")}</h1>
             </div>
             
