@@ -4,9 +4,8 @@ import { Input } from './components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 import { Label } from './components/ui/label';
-import { Separator } from './components/ui/separator';
 import { Copy, Download, Share2, Sparkles } from 'lucide-react';
-import { toast } from 'sonner';
+import { Toaster, toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
 
@@ -27,11 +26,13 @@ const languageNames = {
 };
 
 export default function App() {
-  const [url, setUrl] = useState('');
-  const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>("");
-  const [summaryMode, setSummaryMode] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [summary, setSummary] = useState('');
+  const [url, setUrl] = useState<string>('');
+  const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>('');
+  const [summaryMode, setSummaryMode] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [showArticle, setShowArticle] = useState<boolean>(false);
+  const [article, setArticle] = useState<string>('');
+  const [summary, setSummary] = useState<string>('');
   const [language, setLanguage] = useState<Language>('en');
 
   const { t } = useTranslation();
@@ -89,9 +90,8 @@ export default function App() {
   };
 
   const handleCopy = () => {
-    //navigator.clipboard.writeText(summary);
-    //toast.success(t("copiedMessage"));
-    console.log("copy function called.")
+    navigator.clipboard.writeText(summary);
+    toast.success(t("copiedMessage"));
   };
 
   const handleDownload = () => {
@@ -121,6 +121,16 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/20 to-background">
+      <Toaster
+        position="top-right"
+        richColors
+        closeButton
+        toastOptions={{
+          style: { fontSize: '1rem' },
+          duration: 3000,
+        }}
+      />
+
       {/* Header */}
       <header className="border-b bg-card/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
@@ -176,9 +186,9 @@ export default function App() {
                     <SelectValue placeholder={t("chooseSummaryStyle")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="short">{t("shortSummary")}</SelectItem>
-                    <SelectItem value="detailed">{t("detailedSummary")}</SelectItem>
-                    <SelectItem value="bullets">{t("bulletPoints")}</SelectItem>
+                    <SelectItem value="default">{t("defaultSummary")}</SelectItem>
+                    <SelectItem value="bullets">{t("bulletPointsSummary")}</SelectItem>
+                    <SelectItem value="simple">{t("simplifiedSummary")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -202,19 +212,15 @@ export default function App() {
                   )}
                 </Button>
               </div>
-          
             </CardContent>
           </Card>
 
           {/* Output Section */}
           {summary && (
-            <Card className="shadow-xl border-0 bg-gradient-to-br from-card to-purple-50/30 dark:to-purple-900/10">
+            <Card className="gap-2 shadow-xl border-0 bg-gradient-to-br from-card to-purple-50/30 dark:to-purple-900/10">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 text-white" />
-                    </div>
+                  <CardTitle className="text-2xl font-medium flex items-center gap-2">
                     {t("generatedSummary")}
                   </CardTitle>
                   <div className="flex items-center gap-2">
@@ -229,13 +235,26 @@ export default function App() {
                     </Button>
                   </div>
                 </div>
-                <Separator />
               </CardHeader>
+              <div className="w-17/18 mx-auto h-px bg-gray-200" />
               <CardContent>
-                <div className="max-h-96 overflow-y-auto prose prose-neutral dark:prose-invert max-w-none whitespace-pre-wrap">
+                <div className="bg-indigo-50 rounded-lg p-2.5 max-h-96 overflow-y-auto mt-1">
                   {summary}
                 </div>
+                <button
+                  onClick={() => setShowArticle(!showArticle)}
+                  className="text-blue-600 font-medium hover:underline mt-4"
+                >
+                  {showArticle ? "Hide full article" : "Show full article"}
+                </button>
               </CardContent>
+              {showArticle && (
+                <CardContent>
+                  <div className="bg-indigo-50 rounded-lg p-2.5 max-h-[2000px] overflow-y-auto">
+                    {article}
+                  </div>
+                </CardContent>
+              )}
             </Card>
           )}
 
