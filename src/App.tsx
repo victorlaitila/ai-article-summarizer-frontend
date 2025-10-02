@@ -3,7 +3,6 @@ import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
-import { Label } from './components/ui/label';
 import { Copy, Download, Share2, Sparkles } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
@@ -50,6 +49,7 @@ export default function App() {
       }
     };
     wakeBackend();
+    changeLanguage(language);
   }, []);
 
   const changeLanguage = (lang: Language) => {
@@ -120,7 +120,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-accent/20 to-background">
+    <div className="bg-gradient-to-br from-background via-accent/20 to-background">
       <Toaster
         position="top-right"
         richColors
@@ -137,13 +137,18 @@ export default function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Gradient />
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">{t("appName")}</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent flex items-center gap-1.5">
+                {t("summary")}
+                <span className="inline-block bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg px-1 py-0.25 shadow font-bold">
+                  {t("ai")}
+                </span>
+              </h1>
             </div>
             
             {/* Language Selector */}
             <div className="flex items-center gap-2">
               <Select value={language} onValueChange={(value: Language) => changeLanguage(value)}>
-                <SelectTrigger className="w-40 h-10 border-0 bg-transparent hover:bg-accent/50 focus:ring-1">
+                <SelectTrigger className="w-40 border-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -165,11 +170,11 @@ export default function App() {
           {/* Input Section */}
           <Card className="shadow-xl border-1 bg-gradient-to-br from-card to-accent/10">
             <CardHeader>
-              <Label>{t("description")}</Label>
+              <p className="font-medium text-sm leading-none">{t("description")}</p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="url">{t("articleUrl")}</Label>
+                <p className="font-medium text-sm leading-none">{t("articleUrl")}</p>
                 <Input
                   id="url"
                   type="url"
@@ -181,7 +186,7 @@ export default function App() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="summary-mode">{t("summaryMode")}</Label>
+                <p className="font-medium text-sm leading-none">{t("summaryMode")}</p>
                 <Select value={summaryMode} onValueChange={setSummaryMode}>
                   <SelectTrigger id="summary-mode" className="h-12">
                     <SelectValue placeholder={t("chooseSummaryStyle")} />

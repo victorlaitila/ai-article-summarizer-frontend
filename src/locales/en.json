@@ -1,5 +1,6 @@
 {
-  "appName": "SummaryAI",
+  "summary": "Summary",
+  "ai": "AI",
   "description": "Enter an article URL and choose how you'd like it summarized:",
   "articleUrl": "Article URL",
   "urlPlaceholder": "https://example.com/article",

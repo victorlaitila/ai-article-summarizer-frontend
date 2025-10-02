@@ -1,5 +1,6 @@
 {
-  "appName": "SummaryAI",
+  "summary": "Summary",
+  "ai": "AI",
   "description": "Ange en artikel-URL och välj hur du vill att den ska sammanfattas:",
   "articleUrl": "Artikel-URL",
   "urlPlaceholder": "https://example.com/article",
