@@ -17,5 +17,6 @@
   "errorMessage": "Ange en URL och välj ett sammanfattningsläge",
   "successMessage": "Sammanfattningen har genererats!",
   "copiedMessage": "Sammanfattningen har kopierats till urklipp!",
-  "downloadedMessage": "Sammanfattningen har laddats ner!"
+  "downloadedMessage": "Sammanfattningen har laddats ner!",
+  "langChanged": "Språket ändrat till svenska!"
 }

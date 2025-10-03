@@ -17,5 +17,6 @@
   "errorMessage": "Please enter a URL and select a summary mode",
   "successMessage": "Summary generated successfully!",
   "copiedMessage": "Summary copied to clipboard!",
-  "downloadedMessage": "Summary downloaded!"
+  "downloadedMessage": "Summary downloaded!",
+  "langChanged": "Language changed to English!"
 }

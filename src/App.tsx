@@ -6,8 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Copy, Download, Share2, Sparkles } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
-import i18n from './i18n';
-import Gradient from './components/Gradient';
+import { useLanguage } from './contexts/LanguageContext';
+import AppHeader from './components/AppHeader';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,14 +17,6 @@ interface APIResponse {
   error?: string;
 }
 
-type Language = 'en' | 'sv' | 'fi';
-
-const languageNames = {
-  en: '🇺🇸 English',
-  sv: '🇸🇪 Svenska',
-  fi: '🇫🇮 Suomi',
-};
-
 export default function App() {
   const [url, setUrl] = useState<string>('');
   const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>('');
@@ -33,9 +25,9 @@ export default function App() {
   const [showArticle, setShowArticle] = useState<boolean>(false);
   const [article, setArticle] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
-  const [language, setLanguage] = useState<Language>('en');
 
   const { t } = useTranslation();
+  const { language, changeLanguage } = useLanguage();
 
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
@@ -49,13 +41,8 @@ export default function App() {
       }
     };
     wakeBackend();
-    changeLanguage(language);
+    changeLanguage(language, true); // No toast on initial load
   }, []);
-
-  const changeLanguage = (lang: Language) => {
-    setLanguage(lang);
-    i18n.changeLanguage(lang);
-  }
 
   const handleGenerate = async () => {
     // Block submitting the same URL again
@@ -134,38 +121,7 @@ export default function App() {
         }}
       />
 
-      {/* Header */}
-      <header className="border-b bg-card/80">
-        <div className="mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Gradient />
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent flex items-center gap-1.5">
-                {t("summary")}
-                <span className="inline-block bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg px-1 py-0.25 shadow font-bold">
-                  {t("ai")}
-                </span>
-              </h1>
-            </div>
-            
-            {/* Language Selector */}
-            <div>
-              <Select value={language} onValueChange={(value: Language) => changeLanguage(value)}>
-                <SelectTrigger className="w-40 border-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(languageNames).map(([code, name]) => (
-                    <SelectItem key={code} value={code}>
-                      {name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">

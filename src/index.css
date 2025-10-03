@@ -189,6 +189,8 @@ html {
   font-size: var(--font-size);
 }
 
+/* Component overrides */
+
 .toast-close-button { 
   top: 50% !important;
   transform: translateY(-50%) !important;

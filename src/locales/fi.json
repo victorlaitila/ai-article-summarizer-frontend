@@ -17,5 +17,6 @@
   "errorMessage": "Syötä URL-osoite ja valitse yhteenvedon tyyli",
   "successMessage": "Yhteenveto luotu onnistuneesti!",
   "copiedMessage": "Yhteenveto kopioitu leikepöydälle!",
-  "downloadedMessage": "Yhteenveto ladattu!"
+  "downloadedMessage": "Yhteenveto ladattu!",
+  "langChanged": "Kieli vaihdettu suomeksi!"
 }
