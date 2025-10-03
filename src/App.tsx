@@ -59,7 +59,7 @@ export default function App() {
 
   const handleGenerate = async () => {
     // Block submitting the same URL again
-    if (url === lastSubmittedUrl) {
+    if (url === lastSubmittedUrl && summary) {
       toast.error("Please enter a new URL.");
       return;
     }
@@ -126,14 +126,17 @@ export default function App() {
         richColors
         closeButton
         toastOptions={{
-          style: { fontSize: '1rem' },
+          classNames: {
+            closeButton: 'toast-close-button', 
+          },
+          style: { fontSize: "1rem", width: "max-content", maxWidth: "50vw", paddingRight: "36px" },
           duration: 3000,
         }}
       />
 
       {/* Header */}
-      <header className="border-b bg-card/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
+      <header className="border-b bg-card/80">
+        <div className="mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Gradient />
@@ -146,7 +149,7 @@ export default function App() {
             </div>
             
             {/* Language Selector */}
-            <div className="flex items-center gap-2">
+            <div>
               <Select value={language} onValueChange={(value: Language) => changeLanguage(value)}>
                 <SelectTrigger className="w-40 border-0">
                   <SelectValue />
@@ -223,13 +226,13 @@ export default function App() {
 
           {/* Output Section */}
           {summary && (
-            <Card className="gap-2 shadow-xl border-0 bg-gradient-to-br from-card to-purple-50/30 dark:to-purple-900/10">
+            <Card className="gap-3 shadow-xl bg-gradient-to-br from-card to-purple-50/30">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-2xl font-medium flex items-center gap-2">
+                  <CardTitle className="text-2xl font-medium relative top-0.5">
                     {t("generatedSummary")}
                   </CardTitle>
-                  <div className="flex items-center gap-2">
+                  <div className="flex gap-2">
                     <Button variant="outline" size="sm" onClick={handleCopy} className="hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700">
                       <Copy className="w-4 h-4" />
                     </Button>
@@ -244,19 +247,19 @@ export default function App() {
               </CardHeader>
               <div className="w-17/18 mx-auto h-px bg-gray-200" />
               <CardContent>
-                <div className="bg-indigo-50 rounded-lg p-2.5 max-h-96 overflow-y-auto mt-1">
+                <div className="bg-indigo-50 rounded-lg p-2.5 mt-1">
                   {summary}
                 </div>
                 <button
                   onClick={() => setShowArticle(!showArticle)}
-                  className="text-blue-600 font-medium hover:underline mt-4"
+                  className="text-blue-600 font-medium hover:underline mt-4 cursor-pointer"
                 >
                   {showArticle ? "Hide full article" : "Show full article"}
                 </button>
               </CardContent>
               {showArticle && (
                 <CardContent>
-                  <div className="bg-indigo-50 rounded-lg p-2.5 max-h-[2000px] overflow-y-auto">
+                  <div className="bg-indigo-50 rounded-lg p-2.5">
                     {article}
                   </div>
                 </CardContent>

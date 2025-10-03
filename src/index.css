@@ -188,3 +188,12 @@
 html {
   font-size: var(--font-size);
 }
+
+.toast-close-button { 
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 10px !important; 
+  left: auto !important; 
+  background-color: #ffffff !important;
+  border: #b5b5b5 1px solid !important;
+}
