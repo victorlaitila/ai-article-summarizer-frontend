@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Button } from './components/ui/button';
-import { Input } from './components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
-import { Copy, Download, Share2, Sparkles } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Toaster, toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from './contexts/LanguageContext';
 import AppHeader from './components/AppHeader';
+import ModeSelector from './components/ModeSelector';
+import GeneratorButton from './components/GeneratorButton';
+import UrlInput from './components/UrlInput';
+import SummaryButtonGroup from './components/SummaryButtonGroup';
+import SummaryPlaceholder from './components/SummaryPlaceholder';
+import FullArticle from './components/FullArticle';
+import Summary from './components/Summary';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -114,7 +117,7 @@ export default function App() {
         closeButton
         toastOptions={{
           classNames: {
-            closeButton: 'toast-close-button', 
+            closeButton: "toast-close-button", 
           },
           style: { fontSize: "1rem", width: "max-content", maxWidth: "50vw", paddingRight: "36px" },
           duration: 3000,
@@ -122,61 +125,24 @@ export default function App() {
       />
 
       <AppHeader />
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="space-y-8">
+
           {/* Input Section */}
           <Card className="shadow-xl border-1 bg-gradient-to-br from-card to-accent/10">
             <CardHeader>
               <p className="font-medium text-sm leading-none">{t("description")}</p>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <p className="font-medium text-sm leading-none">{t("articleUrl")}</p>
-                <Input
-                  id="url"
-                  type="url"
-                  placeholder={t("urlPlaceholder")}
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  className="h-12"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <p className="font-medium text-sm leading-none">{t("summaryMode")}</p>
-                <Select value={summaryMode} onValueChange={setSummaryMode}>
-                  <SelectTrigger id="summary-mode" className="h-12">
-                    <SelectValue placeholder={t("chooseSummaryStyle")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="default">{t("defaultSummary")}</SelectItem>
-                    <SelectItem value="bullets">{t("bulletPointsSummary")}</SelectItem>
-                    <SelectItem value="simple">{t("simplifiedSummary")}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Button 
-                  onClick={handleGenerate} 
-                  disabled={isGenerating || !url || !summaryMode}
-                  className="w-full h-12 bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg"
-                >
-                  {isGenerating ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
-                      {t("generating")}
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      {t("generateSummary")}
-                    </>
-                  )}
-                </Button>
-              </div>
+              <UrlInput url={url} setUrl={setUrl} />
+              <ModeSelector summaryMode={summaryMode} setSummaryMode={setSummaryMode} />
+              <GeneratorButton 
+                handleGenerate={handleGenerate}
+                isGenerating={isGenerating}
+                url={url}
+                summaryMode={summaryMode} 
+              />
             </CardContent>
           </Card>
 
@@ -188,55 +154,25 @@ export default function App() {
                   <CardTitle className="text-2xl font-medium relative top-0.5">
                     {t("generatedSummary")}
                   </CardTitle>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={handleCopy} className="hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700">
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={handleDownload} className="hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700">
-                      <Download className="w-4 h-4" />
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={handleShare} className="hover:bg-purple-50 hover:border-purple-200 hover:text-purple-700">
-                      <Share2 className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  <SummaryButtonGroup 
+                    handleCopy={handleCopy}
+                    handleDownload={handleDownload}
+                    handleShare={handleShare}
+                  />
                 </div>
               </CardHeader>
               <div className="w-17/18 mx-auto h-px bg-gray-200" />
-              <CardContent>
-                <div className="bg-indigo-50 rounded-lg p-2.5 mt-1">
-                  {summary}
-                </div>
-                <button
-                  onClick={() => setShowArticle(!showArticle)}
-                  className="text-blue-600 font-medium hover:underline mt-4 cursor-pointer"
-                >
-                  {showArticle ? "Hide full article" : "Show full article"}
-                </button>
-              </CardContent>
-              {showArticle && (
-                <CardContent>
-                  <div className="bg-indigo-50 rounded-lg p-2.5">
-                    {article}
-                  </div>
-                </CardContent>
-              )}
+              <Summary
+                summary={summary}
+                showArticle={showArticle}
+                setShowArticle={setShowArticle}
+              />
+              {showArticle && (<FullArticle article={article} />)}
             </Card>
           )}
 
           {/* Empty State */}
-          {!summary && (
-            <Card className="shadow-xl border-1 bg-gradient-to-br from-card to-accent/10">
-              <CardContent className="mb-8 flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center mb-6 shadow-lg">
-                  <Sparkles className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-lg font-medium mb-2">{t("readyToSummarize")}</h3>
-                <p className="text-muted-foreground max-w-sm">
-                  {t("readyDescription")}
-                </p>
-              </CardContent>
-            </Card>
-          )}
+          {!summary && (<SummaryPlaceholder />)}
         </div>
       </main>
     </div>

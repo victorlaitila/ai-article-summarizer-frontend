@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select';
 import type { Language } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -11,7 +11,7 @@ const languageNames = {
 export default function LanguageSelector() {
   const { language, changeLanguage } = useLanguage();
 
-  return(
+  return (
     <div>
       <Select value={language} onValueChange={(value: Language) => changeLanguage(value)}>
         <SelectTrigger className="w-40 border-0">
