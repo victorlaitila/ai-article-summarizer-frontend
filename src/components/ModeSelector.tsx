@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select'
+import type { SummaryMode } from '../types';
 
 interface ModeSelectorProps {
   summaryMode: string;
-  setSummaryMode: (mode: string) => void;
+  setSummaryMode: (mode: SummaryMode) => void;
 }
 
 export default function ModeSelector({summaryMode, setSummaryMode}: ModeSelectorProps) {

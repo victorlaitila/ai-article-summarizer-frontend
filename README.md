@@ -8,6 +8,8 @@ Backend repository can be found [here](https://github.com/victorlaitila/ai-artic
 ## Live Demo
 The app is live here: [AI Article Summarizer](https://victorlaitila.github.io/ai-article-summarizer-frontend/)
 
+NOTE: the demo uses a mock server with static data and does not call the actual backend API in order to avoid deployment costs.
+
 ## Features
 - Enter a URL and get the article text plus a summarized version
 - Choose between different summarization modes:
