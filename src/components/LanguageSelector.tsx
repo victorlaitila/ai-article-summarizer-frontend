@@ -14,7 +14,7 @@ export default function LanguageSelector() {
   return (
     <div>
       <Select value={language} onValueChange={(value: Language) => changeLanguage(value)}>
-        <SelectTrigger className="w-40 border-0">
+        <SelectTrigger className="w-30 border-0">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
