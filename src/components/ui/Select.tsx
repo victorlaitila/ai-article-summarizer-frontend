@@ -47,8 +47,11 @@ function SelectContent({
   className,
   children,
   position = "popper",
+  widthClass,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Content>) {
+}: React.ComponentProps<typeof SelectPrimitive.Content> & {
+  widthClass?: string;
+}) {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
@@ -62,7 +65,8 @@ function SelectContent({
       >
         <SelectPrimitive.Viewport
           className={cn(
-            "p-1 w-[var(--radix-select-trigger-width)]",
+            "p-1",
+            widthClass ? widthClass : "w-[var(--radix-select-trigger-width)]"
           )}
         >
           {children}
