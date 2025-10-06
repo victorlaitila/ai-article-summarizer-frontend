@@ -31,6 +31,7 @@ function SelectTrigger({
         "border-gray-300 shadow-sm data-[placeholder]:text-muted-foreground flex w-full items-center justify-between rounded-md border px-3 py-2 text-sm outline-none cursor-pointer",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
         "data-[state=open]:border-ring data-[state=open]:ring-ring/50 data-[state=open]:ring-[3px]",
+        "[&[data-state=open]]:pointer-events-auto",
         className,
       )}
       {...props}

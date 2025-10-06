@@ -151,8 +151,8 @@ export default function App() {
         toastOptions={{
           classNames: {
             closeButton: "toast-close-button", 
+            toast: "toast"
           },
-          style: { fontSize: "1rem", width: "max-content", maxWidth: "50vw", paddingRight: "36px" },
           duration: 3000,
         }}
       />

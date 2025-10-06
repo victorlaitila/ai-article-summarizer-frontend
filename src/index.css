@@ -191,6 +191,19 @@ html {
 
 /* Component overrides */
 
+.toast {
+  max-width: 50vw;
+  width: max-content !important;
+  padding-right: 36px !important;
+  font-size: 1em !important;
+}
+
+@media (max-width: 768px) {
+  .toast {
+    max-width: 90vw;
+  }
+}
+
 .toast-close-button { 
   top: 50% !important;
   transform: translateY(-50%) !important;
