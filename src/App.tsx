@@ -13,6 +13,8 @@ import FullArticle from './components/FullArticle';
 import Summary from './components/Summary';
 import MOCK_ARTICLES from './mockArticles.json';
 import type { SummaryMode } from './types';
+import { useKeywords } from './contexts/KeywordContext';
+import { extractKeywords } from './utils/keywords';
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -24,16 +26,17 @@ interface APIResponse {
 }
 
 export default function App() {
-  const [url, setUrl] = useState<string>('');
-  const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>('');
-  const [summaryMode, setSummaryMode] = useState<SummaryMode>('default');
+  const [url, setUrl] = useState<string>("");
+  const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>("");
+  const [summaryMode, setSummaryMode] = useState<SummaryMode>("default");
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [showArticle, setShowArticle] = useState<boolean>(false);
-  const [article, setArticle] = useState<string>('');
-  const [summary, setSummary] = useState<string>('');
+  const [article, setArticle] = useState<string>("");
+  const [summary, setSummary] = useState<string>("");
 
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
+  const { setGeneratedKeywords, clearKeywords } = useKeywords();
 
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
@@ -102,6 +105,10 @@ export default function App() {
 
       setArticle(result.article_text);
       setSummary(result.summary);
+      // Clear old keywords (generated and highlighted)
+      clearKeywords();
+      const generatedKeywords = extractKeywords(result.article_text, 5);
+      setGeneratedKeywords(generatedKeywords);
       setLastSubmittedUrl(url);
     } catch (err: any) {
       toast.error("Failed to fetch API");
