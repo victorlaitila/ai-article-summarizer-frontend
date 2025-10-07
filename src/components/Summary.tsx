@@ -1,5 +1,7 @@
 import { Trans } from "react-i18next";
 import { CardContent } from "./ui/Card";
+import TextToSpeechButton from "./TextToSpeechButton";
+import { detectBCPLang } from "../utils/language";
 
 interface SummaryProps {
   summary: string;
@@ -9,6 +11,7 @@ interface SummaryProps {
 
 export default function Summary({summary, showArticle, setShowArticle}: SummaryProps) {
   const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
+  const bcpLang = detectBCPLang(summary);
 
   return (
     <CardContent>
@@ -32,7 +35,10 @@ export default function Summary({summary, showArticle, setShowArticle}: SummaryP
             <div className="w-35/36 my-2 mx-auto h-px bg-gray-300" />
           </>
         )}
-        {summary}
+        <div>
+          {summary}
+          <TextToSpeechButton text={summary} lang={bcpLang} />
+        </div>
       </div>
       <button
         onClick={() => setShowArticle(!showArticle)}

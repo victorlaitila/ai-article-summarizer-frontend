@@ -38,6 +38,8 @@ export default function App() {
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
   useEffect(() => {
+    // If TTS is active, stop any ongoing speech when refreshing
+    window.speechSynthesis.cancel();
     changeLanguage(language, true); // No toast on initial load
     if (USE_MOCK_API) {
       return;
@@ -54,15 +56,11 @@ export default function App() {
   }, []);
 
   const fetchArticle = async (): Promise<{ article_text: string; summary: string }> => {
-
-    console.log("in")
     const response = await fetch(`${API_URL}/scrape-and-summarize`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url, mode: summaryMode }),
     });
-
-    console.log("reponse", response)
 
     const data: APIResponse = await response.json();
 
@@ -119,15 +117,14 @@ export default function App() {
   };
 
   const handleDownload = () => {
-    {/*const blob = new Blob([summary], { type: 'text/plain' });
+    const blob = new Blob([summary], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'article-summary.txt';
     a.click();
     URL.revokeObjectURL(url);
-    toast.success(t("downloadedMessage"));*/}
-    console.log("download function called.")
+    toast.success(t("downloadedMessage"));
   };
 
   const handleShare = () => {
