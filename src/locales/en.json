@@ -19,5 +19,10 @@
   "copiedMessage": "Summary copied to clipboard!",
   "downloadedMessage": "Summary downloaded!",
   "langChanged": "Language changed to English!",
+  "showFullArticle": "Show Full Article",
+  "hideFullArticle": "Hide Full Article",
+  "copy": "Copy",
+  "download": "Download",
+  "share": "Share",
   "mockSummary": "This is a mock summary and article shown for demonstration purposes. The real server and backend API is not active in the live demo to avoid deployment costs, but the full functionality is available in the <projectLink>backend source code</projectLink>."
 }

@@ -18,5 +18,10 @@
   "successMessage": "Yhteenveto luotu onnistuneesti!",
   "copiedMessage": "Yhteenveto kopioitu leikepöydälle!",
   "downloadedMessage": "Yhteenveto ladattu!",
-  "langChanged": "Kieli vaihdettu suomeksi!"
+  "langChanged": "Kieli vaihdettu suomeksi!",
+  "copy": "Kopioi",
+  "download": "Lataa",
+  "share": "Jaa",
+  "showFullArticle": "Näytä Koko Artikkeli",
+  "hideFullArticle": "Piilota Koko Artikkeli"
 }

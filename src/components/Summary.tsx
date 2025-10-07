@@ -1,17 +1,23 @@
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { CardContent } from "./ui/Card";
 import TextToSpeechButton from "./TextToSpeechButton";
 import { detectBCPLang } from "../utils/language";
+import { extractKeywords } from "../utils/keywords";
 
 interface SummaryProps {
   summary: string;
+  fullArticle: string;
   showArticle: boolean;
   setShowArticle: (show: boolean) => void;
 }
 
-export default function Summary({summary, showArticle, setShowArticle}: SummaryProps) {
+export default function Summary({summary, fullArticle, showArticle, setShowArticle}: SummaryProps) {
   const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
   const bcpLang = detectBCPLang(summary);
+
+  const { t } = useTranslation();
+
+  const keywords = extractKeywords(fullArticle, 5);
 
   return (
     <CardContent>
@@ -39,12 +45,24 @@ export default function Summary({summary, showArticle, setShowArticle}: SummaryP
           {summary}
           <TextToSpeechButton text={summary} lang={bcpLang} />
         </div>
+
+        {/* Extracted keywords */}
+        <div className="flex flex-wrap gap-2 mt-5">
+          {keywords.map((word) => (
+            <button
+              key={word}
+              className="bg-indigo-100 text-indigo-700 text-xs font-medium px-2 py-1 rounded-full cursor-pointer"
+            >
+              {word}
+            </button>
+          ))}
+        </div>
       </div>
       <button
         onClick={() => setShowArticle(!showArticle)}
         className="text-blue-600 font-medium hover:underline mt-4 cursor-pointer"
       >
-        {showArticle ? "Hide full article" : "Show full article"}
+        {showArticle ? t("hideFullArticle") : t("showFullArticle")}
       </button>
     </CardContent>
   )

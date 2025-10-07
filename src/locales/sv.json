@@ -18,5 +18,10 @@
   "successMessage": "Sammanfattningen har genererats!",
   "copiedMessage": "Sammanfattningen har kopierats till urklipp!",
   "downloadedMessage": "Sammanfattningen har laddats ner!",
-  "langChanged": "Språket ändrat till svenska!"
+  "langChanged": "Språket ändrat till svenska!",
+  "copy": "Kopiera",
+  "download": "Ladda ner",
+  "share": "Dela",
+  "showFullArticle": "Visa Hela Artikeln",
+  "hideFullArticle": "Dölj Hela Artikeln"
 }

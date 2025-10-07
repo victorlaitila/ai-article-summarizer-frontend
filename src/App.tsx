@@ -73,7 +73,7 @@ export default function App() {
 
   const fetchMockArticle = (): Promise<{ article_text: string; summary: string }> => {
     return new Promise((resolve) => {
-      const mockDelay = Math.random() * 2000 + 2000; // 2-4 seconds
+      const mockDelay = Math.random() * 2000 + 1000; // 2-3 seconds
       setTimeout(() => {
         const randomIndex = Math.floor(Math.random() * MOCK_ARTICLES.length);
         const mockArticle = MOCK_ARTICLES[randomIndex];
@@ -194,6 +194,7 @@ export default function App() {
               <div className="w-17/18 mx-auto h-px bg-gray-200" />
               <Summary
                 summary={summary}
+                fullArticle={article}
                 showArticle={showArticle}
                 setShowArticle={setShowArticle}
               />
