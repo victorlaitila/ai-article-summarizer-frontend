@@ -15,6 +15,9 @@ import MOCK_ARTICLES from './mockArticles.json';
 import type { SummaryMode } from './types';
 import { useKeywords } from './contexts/KeywordContext';
 import { extractKeywords } from './utils/keywords';
+import SourceSelector from './components/SourceSelector';
+import TextareaInput from './components/TextareaInput';
+import FileUploader from './components/FileUploader';
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -27,12 +30,15 @@ interface APIResponse {
 
 export default function App() {
   const [url, setUrl] = useState<string>("");
+  const [freeText, setFreeText] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>("");
   const [summaryMode, setSummaryMode] = useState<SummaryMode>("default");
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [showArticle, setShowArticle] = useState<boolean>(false);
   const [article, setArticle] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
+  const [sourceType, setSourceType] = useState<"url" | "text" | "file">("url");
 
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
@@ -172,7 +178,10 @@ export default function App() {
               <p className="font-medium text-sm leading-none">{t("description")}</p>
             </CardHeader>
             <CardContent className="space-y-6">
-              <UrlInput url={url} setUrl={setUrl} />
+              <SourceSelector sourceType={sourceType} setSourceType={setSourceType} />
+              {sourceType === "url" && <UrlInput url={url} setUrl={setUrl} />}
+              {sourceType === "text" && <TextareaInput text={freeText} setText={setFreeText} />}
+              {sourceType === "file" && <FileUploader file={file} setFile={setFile} />}
               <ModeSelector summaryMode={summaryMode} setSummaryMode={setSummaryMode} />
               <GeneratorButton 
                 handleGenerate={handleGenerate}

@@ -1,7 +1,7 @@
 {
   "summary": "Summary",
   "ai": "AI",
-  "description": "Ange en artikel-URL och välj hur du vill att den ska sammanfattas:",
+  "description": "Ange artikelns innehåll och välj hur du vill att den ska sammanfattas:",
   "articleUrl": "Artikel-URL",
   "urlPlaceholder": "https://example.com/article",
   "summaryMode": "Sammanfattningsläge",
@@ -13,7 +13,7 @@
   "generating": "Genererar...",
   "generatedSummary": "Genererad sammanfattning",
   "readyToSummarize": "Redo att sammanfatta",
-  "readyDescription": "Ange en artikel-URL ovan och välj önskad sammanfattningsstil för att komma igång.",
+  "readyDescription": "Ange artikelns innehåll ovan och välj en sammanfattningsstil för att komma igång.",
   "errorMessage": "Ange en URL och välj ett sammanfattningsläge",
   "successMessage": "Sammanfattningen har genererats!",
   "copiedMessage": "Sammanfattningen har kopierats till urklipp!",
@@ -23,5 +23,12 @@
   "download": "Ladda ner",
   "share": "Dela",
   "showFullArticle": "Visa Hela Artikeln",
-  "hideFullArticle": "Dölj Hela Artikeln"
+  "hideFullArticle": "Dölj Hela Artikeln",
+  "URL": "URL",
+  "text": "Text",
+  "file": "Fil",
+  "textAreaDescription": "Skriv eller klistra in din text nedan",
+  "textAreaPlaceholder": "Klistra in texten du vill sammanfatta...",
+  "fileUploadDescription": "Ladda upp en fil för sammanfattning",
+  "uploadFile": "Ladda Upp Fil"
 }

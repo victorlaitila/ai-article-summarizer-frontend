@@ -7,7 +7,7 @@ export default function AppHeader() {
 
   return (
     <header className="border-b bg-card/80">
-      <div className="mx-auto px-4 py-6">
+      <div className="mx-auto px-4 py-3 [@media(min-width:500px)]:py-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Gradient />

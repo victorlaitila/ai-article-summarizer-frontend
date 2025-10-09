@@ -1,7 +1,7 @@
 {
   "summary": "Summary",
   "ai": "AI",
-  "description": "Enter an article URL and choose how you'd like it summarized:",
+  "description": "Provide the article content and choose how you'd like it summarized:",
   "articleUrl": "Article URL",
   "urlPlaceholder": "https://example.com/article",
   "summaryMode": "Summary Mode",
@@ -13,7 +13,7 @@
   "generating": "Generating...",
   "generatedSummary": "Generated Summary",
   "readyToSummarize": "Ready to Summarize",
-  "readyDescription": "Enter an article URL above and select your preferred summary style to get started.",
+  "readyDescription": "Enter the article content above and select your preferred summary style to get started.",
   "errorMessage": "Please enter a URL and select a summary mode",
   "successMessage": "Summary generated successfully!",
   "copiedMessage": "Summary copied to clipboard!",
@@ -24,5 +24,12 @@
   "copy": "Copy",
   "download": "Download",
   "share": "Share",
+  "URL": "URL",
+  "text": "Text",
+  "file": "File",
+  "textAreaDescription": "Enter or paste your text below",
+  "textAreaPlaceholder": "Paste the text you want summarized...",
+  "fileUploadDescription": "Upload a file to summarize",
+  "uploadFile": "Upload File",
   "mockSummary": "This is a mock summary and article shown for demonstration purposes. The real server and backend API is not active in the live demo to avoid deployment costs, but the full functionality is available in the <projectLink>backend source code</projectLink>."
 }
