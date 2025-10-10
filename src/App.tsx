@@ -44,8 +44,6 @@ export default function App() {
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
   useEffect(() => {
-    // If TTS is active, stop any ongoing speech when refreshing
-    window.speechSynthesis.cancel();
     changeLanguage(language, true); // No toast on initial load
     if (USE_MOCK_API) {
       return;
