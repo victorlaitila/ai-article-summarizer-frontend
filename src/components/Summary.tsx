@@ -55,7 +55,7 @@ export default function Summary({summary, showArticle, setShowArticle}: SummaryP
         </div>
 
         {/* Extracted keywords */}
-        <div className="flex flex-wrap gap-2 mt-5 mb-1">
+        {generatedKeywords.length > 0 && (<div className="flex flex-wrap gap-2 mt-5 mb-1">
           {generatedKeywords.map((word, index) => {
             const style = keywordButtonStyles[index % keywordButtonStyles.length];
             const isActive = selectedKeywords.includes(word);
@@ -75,7 +75,7 @@ export default function Summary({summary, showArticle, setShowArticle}: SummaryP
               </button>
             );
           })}
-        </div>
+        </div>)}
       </div>
       <button
         onClick={() => setShowArticle(!showArticle)}

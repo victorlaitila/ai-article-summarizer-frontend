@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Upload, X } from "lucide-react";
 
 interface FileUploaderProps {
-  file: File | null;
-  setFile: (file: File | null) => void;
+  file: File | undefined;
+  setFile: (file: File | undefined) => void;
 }
 
 export default function FileUploader({ file, setFile }: FileUploaderProps) {
@@ -22,7 +22,7 @@ export default function FileUploader({ file, setFile }: FileUploaderProps) {
   };
 
   const handleReset = () => {
-    setFile(null);
+    setFile(undefined);
     setFileName("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -46,17 +46,17 @@ export default function FileUploader({ file, setFile }: FileUploaderProps) {
           onClick={handleClick}
           className="flex flex-col items-center justify-center w-full rounded-lg border border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors py-6 cursor-pointer"
         >
-          <Upload className="w-6 h-6 text-gray-500 mb-2" />
+          <Upload className="w-4 h-4 text-gray-500 mb-1" />
           <span className="text-sm text-gray-600 font-medium">
             {t("uploadFile")}
           </span>
           <span className="text-xs text-gray-400">
-            (.pdf, .txt, .docx, .md)
+            (.pdf, .txt)
           </span>
           <input
             ref={fileInputRef}
             type="file"
-            accept=".pdf,.txt,.docx,.md"
+            accept=".pdf,.txt"
             onChange={handleFileChange}
             className="hidden"
           />

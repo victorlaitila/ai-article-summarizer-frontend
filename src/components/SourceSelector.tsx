@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/Button";
 import { cn } from "./ui/utils";
+import type { SourceType } from "../types";
 
 interface SourceSelectorProps {
-  sourceType: "url" | "text" | "file";
-  setSourceType: (type: "url" | "text" | "file") => void;
+  sourceType: SourceType;
+  setSourceType: (type: SourceType) => void;
 }
 
 export default function SourceSelector({ sourceType, setSourceType }: SourceSelectorProps) {

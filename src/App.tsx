@@ -1,48 +1,45 @@
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
-import { Toaster, toast } from 'sonner';
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from './contexts/LanguageContext';
-import AppHeader from './components/AppHeader';
-import ModeSelector from './components/ModeSelector';
-import GeneratorButton from './components/GeneratorButton';
-import UrlInput from './components/UrlInput';
-import SummaryButtonGroup from './components/SummaryButtonGroup';
-import SummaryPlaceholder from './components/SummaryPlaceholder';
-import FullArticle from './components/FullArticle';
-import Summary from './components/Summary';
-import MOCK_ARTICLES from './mockArticles.json';
-import type { SummaryMode } from './types';
-import { useKeywords } from './contexts/KeywordContext';
-import { extractKeywords } from './utils/keywords';
-import SourceSelector from './components/SourceSelector';
-import TextareaInput from './components/TextareaInput';
-import FileUploader from './components/FileUploader';
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/Card";
+import { Toaster, toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "./contexts/LanguageContext";
+import { useKeywords } from "./contexts/KeywordContext";
+import { useContentHandler } from "./hooks/useContentHandler";
+import AppHeader from "./components/AppHeader";
+import SourceSelector from "./components/SourceSelector";
+import UrlInput from "./components/UrlInput";
+import TextareaInput from "./components/TextareaInput";
+import FileUploader from "./components/FileUploader";
+import ModeSelector from "./components/ModeSelector";
+import GeneratorButton from "./components/GeneratorButton";
+import SummaryButtonGroup from "./components/SummaryButtonGroup";
+import SummaryPlaceholder from "./components/SummaryPlaceholder";
+import FullArticle from "./components/FullArticle";
+import Summary from "./components/Summary";
+import type { SourceType, SummaryMode } from "./types";
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
-const API_URL = import.meta.env.VITE_API_URL;
-
-interface APIResponse {
-  article_text?: string;
-  summary?: string;
-  error?: string;
-}
 
 export default function App() {
-  const [url, setUrl] = useState<string>("");
+  const [sourceType, setSourceType] = useState<SourceType>("url");
+  const [url, setUrl] = useState("");
   const [freeText, setFreeText] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [lastSubmittedUrl, setLastSubmittedUrl] = useState<string>("");
+  const [file, setFile] = useState<File | undefined>(undefined);
   const [summaryMode, setSummaryMode] = useState<SummaryMode>("default");
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [showArticle, setShowArticle] = useState<boolean>(false);
-  const [article, setArticle] = useState<string>("");
-  const [summary, setSummary] = useState<string>("");
-  const [sourceType, setSourceType] = useState<"url" | "text" | "file">("url");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [article, setArticle] = useState("");
+  const [showArticle, setShowArticle] = useState(false);
 
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
   const { setGeneratedKeywords, clearKeywords } = useKeywords();
+
+  const { handleGenerate } = useContentHandler({
+    summaryMode,
+    clearKeywords,
+    setGeneratedKeywords,
+  });
 
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
@@ -64,64 +61,24 @@ export default function App() {
     wakeBackend();
   }, []);
 
-  const fetchArticle = async (): Promise<{ article_text: string; summary: string }> => {
-    const response = await fetch(`${API_URL}/scrape-and-summarize`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, mode: summaryMode }),
-    });
-
-    const data: APIResponse = await response.json();
-
-    if (data.error) {
-      throw new Error(data.error);
-    }
-
-    return { article_text: data.article_text || "", summary: data.summary || "" };
-  };
-
-  const fetchMockArticle = (): Promise<{ article_text: string; summary: string }> => {
-    return new Promise((resolve) => {
-      const mockDelay = Math.random() * 2000 + 1000; // 2-3 seconds
-      setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * MOCK_ARTICLES.length);
-        const mockArticle = MOCK_ARTICLES[randomIndex];
-        const mockSummary = mockArticle.summaries?.[summaryMode];
-        resolve({
-          article_text: mockArticle.article_text,
-          summary: mockSummary,
-        });
-      }, mockDelay);
-    });
-  };
-
-  const handleGenerate = async () => {
-    // Block submitting the same URL again
-    if (url === lastSubmittedUrl && summary) {
-      toast.error("Please enter a new URL.");
-      return;
-    }
-
+  const onGenerateClick = async () => {
     setIsGenerating(true);
 
-    try {
-      const result = USE_MOCK_API
-        ? await fetchMockArticle()
-        : await fetchArticle();
+    const inputValue =
+      sourceType === "url"
+        ? url
+        : sourceType === "text"
+        ? freeText
+        : file?.name || "";
 
-      setArticle(result.article_text);
+    const result = await handleGenerate(sourceType, inputValue, file);
+    if (result?.summary && result.article_text) {
       setSummary(result.summary);
-      // Clear old keywords (generated and highlighted)
-      clearKeywords();
-      const generatedKeywords = extractKeywords(result.article_text, 5);
-      setGeneratedKeywords(generatedKeywords);
-      setLastSubmittedUrl(url);
-    } catch (err: any) {
-      toast.error("Failed to fetch API");
-      setLastSubmittedUrl(url);
-    } finally {
-      setIsGenerating(false);
+      setArticle(result.article_text);
+      toast.success(t("successfulGeneration"));
     }
+
+    setIsGenerating(false);
   };
 
   const handleCopy = () => {
@@ -130,11 +87,10 @@ export default function App() {
   };
 
   const handleDownload = () => {
-    const blob = new Blob([summary], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'article-summary.txt';
+    const blob = new Blob([summary], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "article-summary.txt";
     a.click();
     URL.revokeObjectURL(url);
     toast.success(t("downloadedMessage"));
@@ -173,9 +129,9 @@ export default function App() {
         <div className="space-y-8">
 
           {/* Input Section */}
-          <Card className="shadow-xl border-1 bg-gradient-to-br from-card to-accent/10">
+          <Card className="shadow-xl border bg-gradient-to-br from-card to-accent/10">
             <CardHeader>
-              <p className="font-medium text-sm leading-none">{t("description")}</p>
+              <p className="font-medium text-sm">{t("description")}</p>
             </CardHeader>
             <CardContent className="space-y-6">
               <SourceSelector sourceType={sourceType} setSourceType={setSourceType} />
@@ -183,43 +139,42 @@ export default function App() {
               {sourceType === "text" && <TextareaInput text={freeText} setText={setFreeText} />}
               {sourceType === "file" && <FileUploader file={file} setFile={setFile} />}
               <ModeSelector summaryMode={summaryMode} setSummaryMode={setSummaryMode} />
-              <GeneratorButton 
-                handleGenerate={handleGenerate}
+              <GeneratorButton
+                handleGenerate={onGenerateClick}
                 isGenerating={isGenerating}
+                sourceType={sourceType}
                 url={url}
-                summaryMode={summaryMode} 
+                text={freeText}
+                file={file}
+                summaryMode={summaryMode}
               />
             </CardContent>
           </Card>
 
           {/* Output Section */}
-          {summary && (
-            <Card className="gap-3 shadow-xl bg-gradient-to-br from-card to-purple-50/30">
+          {summary ? (
+            <Card className="shadow-xl bg-gradient-to-br from-card to-purple-50/30">
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-2xl font-medium relative top-0.5">
-                    {t("generatedSummary")}
-                  </CardTitle>
-                  <SummaryButtonGroup 
+                <div className="flex justify-between max-[520px]:flex-col max-[520px]:gap-2.5">
+                  <CardTitle className="text-2xl font-medium">{t("generatedSummary")}</CardTitle>
+                  <SummaryButtonGroup
                     handleCopy={handleCopy}
                     handleDownload={handleDownload}
                     handleShare={handleShare}
                   />
                 </div>
               </CardHeader>
-              <div className="w-17/18 mx-auto h-px bg-gray-200" />
               <Summary
                 summary={summary}
                 fullArticle={article}
                 showArticle={showArticle}
                 setShowArticle={setShowArticle}
               />
-              {showArticle && (<FullArticle article={article} />)}
+              {showArticle && <FullArticle article={article} />}
             </Card>
+          ) : (
+            <SummaryPlaceholder />
           )}
-
-          {/* Empty State */}
-          {!summary && (<SummaryPlaceholder />)}
         </div>
       </main>
     </div>
