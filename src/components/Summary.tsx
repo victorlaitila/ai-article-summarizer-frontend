@@ -2,8 +2,8 @@ import { Trans, useTranslation } from "react-i18next";
 import { CardContent } from "./ui/Card";
 import TextToSpeechButton from "./TextToSpeechButton";
 import { detectBCPLang } from "../utils/language";
-import { formatText } from "../utils/keywords";
 import { useKeywords } from "../contexts/KeywordContext";
+import { FormattedText } from "./FormattedText";
 
 interface SummaryProps {
   summary: string;
@@ -50,7 +50,7 @@ export default function Summary({summary, showArticle, setShowArticle}: SummaryP
           </>
         )}
         <div>
-          {formatText(summary)}
+          <FormattedText text={summary} />
           <TextToSpeechButton text={summary} lang={bcpLang} />
         </div>
 

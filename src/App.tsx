@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/Card";
 import { Toaster, toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "./contexts/LanguageContext";
-import { useKeywords } from "./contexts/KeywordContext";
 import { useContentHandler } from "./hooks/useContentHandler";
 import AppHeader from "./components/AppHeader";
 import SourceSelector from "./components/SourceSelector";
@@ -33,13 +32,8 @@ export default function App() {
 
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
-  const { setGeneratedKeywords, clearKeywords } = useKeywords();
 
-  const { handleGenerate } = useContentHandler({
-    summaryMode,
-    clearKeywords,
-    setGeneratedKeywords,
-  });
+  const { handleGenerate } = useContentHandler(summaryMode);
 
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */

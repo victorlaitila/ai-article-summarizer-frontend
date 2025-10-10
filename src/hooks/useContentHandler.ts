@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { extractKeywords } from "../utils/keywords";
 import MOCK_ARTICLES from "../mockArticles.json";
 import type { SourceType, SummaryMode } from "../types";
+import { useKeywords } from "../contexts/KeywordContext";
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -12,18 +13,9 @@ interface FetchResult {
   summary: string;
 }
 
-interface UseContentHandlerProps {
-  summaryMode: SummaryMode;
-  clearKeywords: () => void;
-  setGeneratedKeywords: (keywords: string[]) => void;
-}
-
-export function useContentHandler({
-  summaryMode,
-  clearKeywords,
-  setGeneratedKeywords,
-}: UseContentHandlerProps) {
+export function useContentHandler(summaryMode: SummaryMode) {
   const [lastInputHash, setLastInputHash] = useState<string>("");
+  const { clearKeywords, setGeneratedKeywords } = useKeywords();
 
   // Generate a unique hash combining source type, content, and summary mode
   const generateInputHash = (type: "url" | "text" | "file", value: string, mode: string) => {
