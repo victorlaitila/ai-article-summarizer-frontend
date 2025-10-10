@@ -24,17 +24,18 @@ export function FormattedText({text}: {text: string}) {
     keywordColorMap[keyword.toLowerCase()] = HIGHLIGHT_COLORS[index % HIGHLIGHT_COLORS.length];
   });
 
-  // Split text and wrap selected keywords in spans
-  const regex = new RegExp(
-    `(${selectedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
-    'gi'
+  // Escape regex special characters in keywords
+  const escapedKeywords = selectedKeywords.map(k =>
+    k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   );
 
+  // Whole-word regex
+  const regex = new RegExp(`\\b(${escapedKeywords.join('|')})\\b`, 'gi');
   const parts = text.split(regex);
 
   return parts.map((part, index) => {
     const lowerPart = part.toLowerCase();
-    if (selectedKeywords.includes(lowerPart)) {
+    if (selectedKeywords.some(k => k.toLowerCase() === lowerPart)) {
       const color = keywordColorMap[lowerPart];
       return (
         <span key={index} className={`${color} rounded px-0.5`}>

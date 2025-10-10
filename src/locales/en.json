@@ -30,5 +30,6 @@
   "textAreaPlaceholder": "Paste the text you want summarized...",
   "fileUploadDescription": "Upload a file to summarize",
   "uploadFile": "Upload File",
+  "failedToFetchData": "Failed to fetch data.",
   "mockSummary": "This is a mock summary and article shown for demonstration purposes. The real server and backend API is not active in the live demo to avoid deployment costs, but the full functionality is available in the <projectLink>backend source code</projectLink>."
 }

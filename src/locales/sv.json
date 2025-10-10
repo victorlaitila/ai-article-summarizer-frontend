@@ -29,5 +29,6 @@
   "textAreaDescription": "Skriv eller klistra in din text nedan",
   "textAreaPlaceholder": "Klistra in texten du vill sammanfatta...",
   "fileUploadDescription": "Ladda upp en fil för sammanfattning",
-  "uploadFile": "Ladda Upp Fil"
+  "uploadFile": "Ladda Upp Fil",
+  "failedToFetchData": "Misslyckades med att hämta data."
 }

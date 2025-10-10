@@ -29,5 +29,6 @@
   "textAreaDescription": "Kirjoita tai liitä teksti alla olevaan kenttään",
   "textAreaPlaceholder": "Liitä teksti, jonka haluat tiivistää...",
   "fileUploadDescription": "Lataa tiedosto yhteenvetoa varten",
-  "uploadFile": "Lataa Tiedosto"
+  "uploadFile": "Lataa Tiedosto",
+  "failedToFetchData": "Datan hakeminen epäonnistui."
 }

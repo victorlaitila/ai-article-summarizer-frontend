@@ -192,7 +192,7 @@ html {
 /* Component overrides */
 
 .toast {
-  max-width: 50vw;
+  max-width: 60vw;
   width: max-content !important;
   padding-right: 36px !important;
   font-size: 1em !important;
