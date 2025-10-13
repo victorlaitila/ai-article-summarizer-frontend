@@ -8,6 +8,15 @@ import { useTranslation } from "react-i18next";
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export function useContentHandler(summaryMode: SummaryMode) {
   const [lastInputHash, setLastInputHash] = useState<string>("");
   const { clearKeywords, setGeneratedKeywords } = useKeywords();
@@ -25,7 +34,13 @@ export function useContentHandler(summaryMode: SummaryMode) {
 
     // Prevent duplicate submission of same content + same mode
     if (currentHash === lastInputHash) {
-      toast.error("Please modify the content or mode to regenerate.");
+      toast.error(t("noDuplicateSubmission"));
+      return null;
+    }
+
+    // Validating URL
+    if (type === "url" && !isValidUrl(value)) {
+      toast.error(t("enterValidUrl"));
       return null;
     }
 
