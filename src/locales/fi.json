@@ -30,5 +30,6 @@
   "textAreaPlaceholder": "Liitä teksti, jonka haluat tiivistää...",
   "fileUploadDescription": "Lataa tiedosto yhteenvetoa varten",
   "uploadFile": "Lataa Tiedosto",
-  "failedToFetchData": "Datan hakeminen epäonnistui."
+  "failedToFetchData": "Datan hakeminen epäonnistui.",
+  "disclaimerText": "Huom: Tämä sovellus on optimoitu englanninkieliselle sisällölle. Yhteenvedot, avainsanat ja puheentuotto voivat olla vähemmän tarkkoja muilla kielillä."
 }

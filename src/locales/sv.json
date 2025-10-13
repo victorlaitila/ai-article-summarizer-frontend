@@ -30,5 +30,6 @@
   "textAreaPlaceholder": "Klistra in texten du vill sammanfatta...",
   "fileUploadDescription": "Ladda upp en fil för sammanfattning",
   "uploadFile": "Ladda Upp Fil",
-  "failedToFetchData": "Misslyckades med att hämta data."
+  "failedToFetchData": "Misslyckades med att hämta data.",
+  "disclaimerText": "Obs! Denna applikation är optimerad för engelskt innehåll. Sammanfattningar, nyckelord och tal kan vara mindre exakta för andra språk."
 }

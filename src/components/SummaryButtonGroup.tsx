@@ -1,15 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/Button';
 import { Copy, Download, Share2 } from 'lucide-react';
+import { useSummaryActions } from '../hooks/useSummaryActions';
 
-interface SummaryButtonGroupProps {
-  handleCopy: () => void;
-  handleDownload: () => void;
-  handleShare: () => void;
-}
-
-export default function SummaryButtonGroup({handleCopy, handleDownload, handleShare}: SummaryButtonGroupProps) {
+export default function SummaryButtonGroup({summary}: {summary: string}) {
   const { t } = useTranslation();
+  const { handleCopy, handleDownload, handleShare } = useSummaryActions(summary);
 
   return (
     <div className="flex gap-2">

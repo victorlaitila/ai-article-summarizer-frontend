@@ -7,7 +7,6 @@ import { FormattedText } from "./FormattedText";
 
 interface SummaryProps {
   summary: string;
-  fullArticle: string;
   showArticle: boolean;
   setShowArticle: (show: boolean) => void;
 }

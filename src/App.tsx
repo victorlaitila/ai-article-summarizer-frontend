@@ -15,7 +15,7 @@ import SummaryButtonGroup from "./components/SummaryButtonGroup";
 import SummaryPlaceholder from "./components/SummaryPlaceholder";
 import FullArticle from "./components/FullArticle";
 import Summary from "./components/Summary";
-import type { SourceType, SummaryMode } from "./types";
+import type { SourceHandler, SourceType, SummaryMode } from "./types";
 
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
 
@@ -34,6 +34,37 @@ export default function App() {
   const { language, changeLanguage } = useLanguage();
 
   const { handleGenerate } = useContentHandler(summaryMode);
+
+  const hasValidInput =
+    (sourceType === "url" && !!url.trim()) ||
+    (sourceType === "text" && !!freeText.trim()) ||
+    (sourceType === "file" && !!file);
+
+  const isGeneratorButtonDisabled = isGenerating || !hasValidInput || !summaryMode;
+
+  const sourceHandlers: Record<SourceType, SourceHandler> = {
+    url: {
+      getInput: () => url,
+      clearOtherSources: () => {
+        setFreeText("");
+        setFile(undefined);
+      },
+    },
+    text: {
+      getInput: () => freeText,
+      clearOtherSources: () => {
+        setUrl("");
+        setFile(undefined);
+      },
+    },
+    file: {
+      getInput: () => file?.name || "",
+      clearOtherSources: () => {
+        setUrl("");
+        setFreeText("");
+      },
+    },
+  };
 
   /* Since the backend is hosted on a free tier service that sleeps after inactivity,
   a wake-up call is sent when the frontend loads. */
@@ -55,49 +86,15 @@ export default function App() {
 
   const onGenerateClick = async () => {
     setIsGenerating(true);
-
-    const inputValue =
-      sourceType === "url"
-        ? url
-        : sourceType === "text"
-        ? freeText
-        : file?.name || "";
-
+    const inputValue = sourceHandlers[sourceType].getInput();
     const result = await handleGenerate(sourceType, inputValue, file);
     if (result?.summary && result.article_text) {
+      sourceHandlers[sourceType].clearOtherSources();
       setSummary(result.summary);
       setArticle(result.article_text);
       toast.success(t("successfulGeneration"));
     }
-
     setIsGenerating(false);
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(summary);
-    toast.success(t("copiedMessage"));
-  };
-
-  const handleDownload = () => {
-    const blob = new Blob([summary], { type: "text/plain" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "article-summary.txt";
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success(t("downloadedMessage"));
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Article Summary',
-        text: summary,
-      });
-    } else {
-      // Fallback for browsers that don't support Web Share API
-      handleCopy();
-    }
   };
 
   return (
@@ -132,13 +129,9 @@ export default function App() {
               {sourceType === "file" && <FileUploader file={file} setFile={setFile} />}
               <ModeSelector summaryMode={summaryMode} setSummaryMode={setSummaryMode} />
               <GeneratorButton
-                handleGenerate={onGenerateClick}
+                onClick={onGenerateClick}
                 isGenerating={isGenerating}
-                sourceType={sourceType}
-                url={url}
-                text={freeText}
-                file={file}
-                summaryMode={summaryMode}
+                disabled={isGeneratorButtonDisabled}
               />
             </CardContent>
           </Card>
@@ -149,16 +142,11 @@ export default function App() {
               <CardHeader>
                 <div className="flex justify-between max-[520px]:flex-col max-[520px]:gap-2.5">
                   <CardTitle className="text-2xl font-medium">{t("generatedSummary")}</CardTitle>
-                  <SummaryButtonGroup
-                    handleCopy={handleCopy}
-                    handleDownload={handleDownload}
-                    handleShare={handleShare}
-                  />
+                  <SummaryButtonGroup summary={summary} />
                 </div>
               </CardHeader>
               <Summary
                 summary={summary}
-                fullArticle={article}
                 showArticle={showArticle}
                 setShowArticle={setShowArticle}
               />

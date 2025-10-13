@@ -1,41 +1,25 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/Button";
 import { Sparkles } from "lucide-react";
-import type { SourceType } from "../types";
 
 interface GeneratorButtonProps {
-  handleGenerate: () => void;
+  onClick: () => void;
   isGenerating: boolean;
-  sourceType: SourceType;
-  url?: string;
-  text?: string;
-  file?: File | null;
-  summaryMode: string;
+  disabled: boolean;
 }
 
 export default function GeneratorButton({
-  handleGenerate,
+  onClick,
   isGenerating,
-  sourceType,
-  url,
-  text,
-  file,
-  summaryMode,
+  disabled,
 }: GeneratorButtonProps) {
   const { t } = useTranslation();
-
-  const hasValidInput =
-    (sourceType === "url" && !!url?.trim()) ||
-    (sourceType === "text" && !!text?.trim()) ||
-    (sourceType === "file" && !!file);
-
-  const isDisabled = isGenerating || !hasValidInput || !summaryMode;
 
   return (
     <div>
       <Button
-        onClick={handleGenerate}
-        disabled={isDisabled}
+        onClick={onClick}
+        disabled={disabled}
         className="w-full h-12 bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary shadow-lg"
       >
         {isGenerating ? (

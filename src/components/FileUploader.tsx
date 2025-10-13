@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button } from "./ui/Button";
 import { useTranslation } from "react-i18next";
 import { Upload, X } from "lucide-react";
@@ -9,7 +9,6 @@ interface FileUploaderProps {
 }
 
 export default function FileUploader({ file, setFile }: FileUploaderProps) {
-  const [fileName, setFileName] = useState<string>("");
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -17,13 +16,11 @@ export default function FileUploader({ file, setFile }: FileUploaderProps) {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setFileName(selectedFile.name);
     }
   };
 
   const handleReset = () => {
     setFile(undefined);
-    setFileName("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -63,7 +60,7 @@ export default function FileUploader({ file, setFile }: FileUploaderProps) {
         </button>
       ) : (
         <div className="flex items-center justify-between w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm">
-          <span className="truncate max-w-[80%] text-gray-700">{fileName}</span>
+          <span className="truncate max-w-[80%] text-gray-700">{file?.name}</span>
           {/* Remove uploaded file */}
           <Button
             variant="ghost"
