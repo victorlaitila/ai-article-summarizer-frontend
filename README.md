@@ -1,7 +1,7 @@
 # AI Article Summarizer Frontend
 
 This is the React + Vite frontend for the AI Article Summarizer project.
-It provides a user interface to scrape and summarize articles using the backend API.
+It provides a user interface to summarize articles using the backend API.
 
 Backend repository can be found [here](https://github.com/victorlaitila/ai-article-summarizer-backend)
 
@@ -11,11 +11,14 @@ The app is live here: [AI Article Summarizer](https://victorlaitila.github.io/ai
 NOTE: the demo uses a mock server with static data and does not call the actual backend API in order to avoid deployment costs.
 
 ## Features
-- Enter a URL and get the article text plus a summarized version
+- Enter the article content (URL/free text/file) to get the full article and a summarized version
 - Choose between different summarization modes:
   - Default (balanced summary)
   - Bullet points
   - Simplified (short and simple summary)
+- Keywords are generated based on the article content and these can be highlighted in the text
+- Both the article and summary have text-to-speech functionality
+- Article summaries can be copied, shared and downloaded
 
 ## Tech Stack
 - React
@@ -24,7 +27,6 @@ NOTE: the demo uses a mock server with static data and does not call the actual 
 - GitHub Pages for deployment
 
 ## Installation
-
 Clone the repository:
 
 ```bash
