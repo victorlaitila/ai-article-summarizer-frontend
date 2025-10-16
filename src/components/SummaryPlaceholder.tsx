@@ -12,11 +12,11 @@ export default function SummaryPlaceholder() {
           <Sparkles className="w-10 h-10 text-white" />
         </div>
         <h3 className="text-lg font-medium mb-2">{t("readyToSummarize")}</h3>
-        <p className="text-muted-foreground max-w-sm">
+        <div className="text-muted-foreground max-w-sm">
           {t("readyDescription")}
           <div className="w-35/36 my-2 mx-auto h-px bg-gray-300" />
           <div className="text-sm">{t("disclaimerText")}</div>
-        </p>
+        </div>
       </CardContent>
     </Card>
   )

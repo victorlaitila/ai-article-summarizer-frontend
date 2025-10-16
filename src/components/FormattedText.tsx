@@ -8,9 +8,7 @@ const HIGHLIGHT_COLORS = [
   "bg-purple-300",
 ];
 
-/**
- * Formats text by highlighting selected keywords in different colors.
- */
+// Formats text by highlighting selected keywords in different colors.
 export function FormattedText({text}: {text: string}) {
   const { generatedKeywords, selectedKeywords } = useKeywords();
 

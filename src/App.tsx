@@ -16,8 +16,7 @@ import SummaryPlaceholder from "./components/SummaryPlaceholder";
 import FullArticle from "./components/FullArticle";
 import Summary from "./components/Summary";
 import type { SourceHandler, SourceType, SummaryMode } from "./types";
-
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
+import { TOAST_DURATION, USE_MOCK_API } from "./constants";
 
 export default function App() {
   const [sourceType, setSourceType] = useState<SourceType>("url");
@@ -32,7 +31,6 @@ export default function App() {
 
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
-
   const { handleGenerate } = useContentHandler(summaryMode);
 
   const hasValidInput =
@@ -108,7 +106,7 @@ export default function App() {
             closeButton: "toast-close-button", 
             toast: "toast"
           },
-          duration: 3000,
+          duration: TOAST_DURATION,
         }}
       />
 

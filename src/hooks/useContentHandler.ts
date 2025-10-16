@@ -5,8 +5,7 @@ import type { ArticleFetchResult, SourceType, SummaryMode } from "../types";
 import { useKeywords } from "../contexts/KeywordContext";
 import { fetchArticle, fetchFileSummary, fetchMockArticle } from "../api/summarize";
 import { useTranslation } from "react-i18next";
-
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
+import { USE_MOCK_API } from "../constants";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -24,7 +23,7 @@ export function useContentHandler(summaryMode: SummaryMode) {
   const { t } = useTranslation();
 
   // Generate a unique hash combining source type, content, and summary mode
-  const generateInputHash = (type: "url" | "text" | "file", value: string, mode: string) => {
+  const generateInputHash = (type: SourceType, value: string, mode: string) => {
     return `${type}:${mode}:${value.trim().slice(0, 100)}`;
   }
 

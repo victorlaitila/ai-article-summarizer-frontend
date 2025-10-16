@@ -8,11 +8,7 @@ interface GeneratorButtonProps {
   disabled: boolean;
 }
 
-export default function GeneratorButton({
-  onClick,
-  isGenerating,
-  disabled,
-}: GeneratorButtonProps) {
+export default function GeneratorButton({onClick, isGenerating, disabled}: GeneratorButtonProps) {
   const { t } = useTranslation();
 
   return (

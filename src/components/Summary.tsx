@@ -4,6 +4,7 @@ import TextToSpeechButton from "./TextToSpeechButton";
 import { detectBCPLang } from "../utils/language";
 import { useKeywords } from "../contexts/KeywordContext";
 import { FormattedText } from "./FormattedText";
+import { USE_MOCK_API } from "../constants";
 
 interface SummaryProps {
   summary: string;
@@ -20,9 +21,7 @@ const keywordButtonStyles = [
 ];
 
 export default function Summary({summary, showArticle, setShowArticle}: SummaryProps) {
-  const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === "true";
   const bcpLang = detectBCPLang(summary);
-
   const { generatedKeywords, selectedKeywords, toggleKeyword } = useKeywords();
   const { t } = useTranslation();
 

@@ -27,7 +27,7 @@ export default function SourceSelector({ sourceType, setSourceType }: SourceSele
             "rounded-full border text-sm px-4 py-1",
             sourceType === type && "ring-1 ring-indigo-400"
           )}
-          onClick={() => setSourceType(type as "url" | "text" | "file")}
+          onClick={() => setSourceType(type as SourceType)}
         >
           {label}
         </Button>
